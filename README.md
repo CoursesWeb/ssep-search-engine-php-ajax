@@ -1,6 +1,10 @@
 <h1>SSEP - Site Search Engine PHP-Ajax</h1>
 This is a completly Free and Open Source Site Search engine script that uses MySQL to store your website's indexed pages, to add Search Functionality to Your Web Site. It is build with PHP and JavaScript (search results are loaded via Ajax).<br>
-The search system combine MySQL full text with SQL regexp, and words weight according to their location in HTML elements, to determine the relevance of the search results.
+The search system combine MySQL full text with SQL regexp, and words weight according to their location in HTML elements, to determine the relevance of the search results.<br>
+
+ &bull; Download Page: http://coursesweb.net/php-mysql/ssep-site-search-engine-php-ajax_s2<br>
+
+ &bull; Demo Page: http://coursesweb.net/scripts/ssep/admin.php<br>
 <h3>Features</h3>
 - Intuitive and easy to use Admin Panel, with a simple adminstration interface, and info mark description to each function.<br>
 - Suports both PDO and MySQLi for accessing MySQL databases in PHP.<br>
@@ -28,8 +32,5 @@ The search system combine MySQL full text with SQL regexp, and words weight acco
 <h3>Other Specifications</h3>
 &bull; The SSEP script uses by default PDO for connecting to MySQL database. If your server not support PDO, the script will use MySQLi.<br>
 &bull; You can Add to Crawl and Index multiple domains, BUT the Search Page can be used to search in a single domain.<br>
-- The SSEP script crawls and indexes only the local links, that points to pages of the current selected domain in Admin Panel.
-
- &bull; To see online Demo of this File Manager, visit: http://coursesweb.net/scripts/ssep/admin.php<br>
- &bull; Home Page: http://coursesweb.net/php-mysql/ssep-site-search-engine-php-ajax_s2<br><hr>
+- The SSEP script crawls and indexes only the local links, that points to pages of the current selected domain in Admin Panel.<br><hr>
 http://coursesweb.net/
