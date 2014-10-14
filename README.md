@@ -30,6 +30,6 @@ The search system combine MySQL full text with SQL regexp, and words weight acco
 &bull; You can Add to Crawl and Index multiple domains, BUT the Search Page can be used to search in a single domain.<br>
 - The SSEP script crawls and indexes only the local links, that points to pages of the current selected domain in Admin Panel.
 
- &bull; To see online Demo of this File Manager, visit: <a href="http://coursesweb.net/scripts/ssep/admin.php" title="Demo SSEP - Site Search Engine PHP-Ajax">http://coursesweb.net/scripts/ssep/admin.php</a><br><br>
- &bull; Home Page: <a href="http://coursesweb.net/php-mysql/ssep-site-search-engine-php-ajax_s2" title="SSEP - Site Search Engine PHP-Ajax">http://coursesweb.net/php-mysql/ssep-site-search-engine-php-ajax_s2</a><br>
-<center><a href="http://coursesweb.net/" title="Web Programming and Development Resources">http://coursesweb.net/</a></center>
+ &bull; To see online Demo of this File Manager, visit: http://coursesweb.net/scripts/ssep/admin.php<br>
+ &bull; Home Page: http://coursesweb.net/php-mysql/ssep-site-search-engine-php-ajax_s2<br><hr>
+http://coursesweb.net/
