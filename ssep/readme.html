@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>SSEP - Site Search Engine PHP-Ajax - Documentation</title>
+<meta name="description" content="Free Site Search engine script, with PHP and Ajax; Documentation. from: http://coursesweb.net/ " />
+<style>
+body, html {background-color:#fdfdfd;margin:1px 4px;padding:0;font-size:1em;font-family:"Calibri",sans-serif;}
+.sb {font-weight:700;}
+.su {text-decoration:underline;}
+.sbi {font-weight:700;font-style:oblique;}
+.si {font-style:oblique;}
+.cb {color:#0000eb;}
+.cr {color:#eb0000;}
+h1 {text-align:center;}
+h1, h3, h4 {
+ margin:1em;
+ text-decoration:underline;
+}
+ul {
+ background:#f1f0fe;
+ padding:2px 1em;
+}
+pre {width:99%;max-height:550px;background:#fefebb;font-size:15px; font-weight:bold; color:blue;padding:3px 4px;overflow:auto;}
+#mp {
+ display:block;
+ margin:1.5em auto;
+ text-align:center;
+}
+</style>
+</head>
+<body>
+<h1>SSEP - Site Search Engine PHP-Ajax</h1>
+This is a completly Free and Open Source Site Search engine script that uses MySQL to store your website's indexed pages, to add Search Functionality to Your Web Site. It is build with PHP and JavaScript (search results are loaded via Ajax).<br>
+The search system combine MySQL full text with SQL regexp, and words weight according to their location in HTML elements, to determine the relevance of the search results.
+<h4>Version 1.9</h4>
+ - To check for new version, visit the page: <a href="https://coursesweb.net/php-mysql/ssep-site-search-engine-php-ajax_s2" title="SSEP - Site Search Engine PHP-Ajax" class="sb">coursesweb.net/php-mysql/ssep-site-search-engine-php-ajax_s2</a>
+<h3>Features</h3>
+- Intuitive and easy to use Admin Panel, with a simple adminstration interface, and info mark description to each function.<br>
+- Suports both PDO and MySQLi for accessing MySQL databases in PHP.<br>
+- Crawl and index web site pages automatically (can follow redirects).<br>
+- Option to Include Subdomains.<br>
+- Options to control indexed URLs: by link's Depth, by Maximum number of URLs to crawl, by URL Must-Include, or Must-Exclude "strings".<br>
+- Crawl and index the links in the XML Sitemap.<br>
+- You can register to Crawl and Index multiple domains.<br>
+- Stop words excluded from searches.<br>
+- Option to remove parts of the page / HTML elements from being indexed.<br>
+- Keeps in the indexed content the text added in the "alt" attribute of the &lt;img&gt; tags (which are outside the removed parts).<br>
+- Option to Build XML Sitemap with the indexed pages.<br>
+- Posibility to Crawl and index domain automatically with Cron Jobs.<br>
+- Easy to translate in other languages.<br>
+- It works with characters with diacritics.<br>
+- The Search results are loaded via Ajax (without refreshing the search page). This option can also be disabled.<br>
+- Paginated serch results.<br>
+- Option to choose Infinite or Standard pagination.<br>
+- Search Suggestions.<br>
+- List with last and top searches.<br>
+- The search results are ordered by a Score calculated according to the HTML elements in which the searched word is located (Title, Description, H1, Strong, ... and other tags, eaven the URL page address).<br>
+- Cache files system for the search results.<br>
+- Search Page with valid HTML5 format, and Responsive design (working on Mobile Device too).<br>
+- CSS and HTML template easy to customize it, to add new elements in search page, and to change the design.
+<h4>Requirements</h4>
+- PHP 5.4+ (with cUrl enabled)<br>
+- MySQL 5.2+<br>
+- Modern Browser with JavaScript enabled (Mozilla-Firefox, Google-Chrome, Opera, Internet-Explorer 9+).
+<h3>Installation</h3>
+<ol>
+ <li>Open the "<span class="sb">config.php</span>" file to edit it (in "<span class="sbi">ssep/php/</span>" folder), and add your data for Name and Password to <span class="sbi">$admin_name</span> and <span class="sbi">$admin_pass</span> variables. They are used to logg in the SSEP Admin Panel.</li>
+ <li>Edit the following data, for connecting to MySQL.
+<pre>
+<span class="sb">$mysql['host'] = 'localhost';</span>            - replace <span class="sbi">localhost</span> with your MySQL server address.
+<span class="sb">$mysql['user'] = 'root';</span>                 - replace <span class="sbi">root</span> with your database user name.
+<span class="sb">$mysql['pass'] = 'passdb';</span>               - replace <span class="sbi">passdb</span> with your password for MySQL database.
+<span class="sb">$mysql['bdname'] = 'dbname';</span>             - replace <span class="sbi">dbname</span> with the name of your MySQL database.
+</pre></li>
+ <li>Copy the "<span class="sb">ssep/</span>" directory on your server, <span class="sb">in the Root</span> folder of your website ("<span class="sbi">www/</span>", "<span class="sbi">htdocs/</span>" or "<span class="sbi">public_html/</span>").</li>
+ <li>Set CHMOD 0755 (or 0777) to "<span class="sb">cache/</span>" folder on your server (it is used to store cache files with the search results).</li>
+ <li>Access the "<span class="sb">ssep/admin.php</span>" file in your browser, with the address from server; for example; <span class="sbi">http://localhost/ssep/admin.php</span></li>
+ <li>Logg-in with your Name and Password set in "config.php" (in $admin_name and $admin_pass variables), and see the description from the info-mark <img src="templ/info_mark.png" alt="Info Mark" width="18" height="18" /> associated to each option in Admin Panel.</li>
+ <li>Add the following HTML code in the pages of your web site in which you want to include the search form.<br>
+ <sub class="sbi su">Click on the code to select it.</sub>
+<pre class="code">
+&lt;form action="/ssep/index.php" method="post"&gt;
+  &lt;input type="text" name="sr" maxlength="45" /&gt;
+  &lt;input type="submit" value="Search" /&gt;
+&lt;/form&gt;
+</pre>
+ - <span class="sbi">The address from "action" must open the "ssep/index.php" file.</span></li>
+</ol>
+ &bull; The SSEP script will register automatically the current domain in database, and creates the needed tables.<br><br>
+ <h4>Cron Jobs Usage</h4>
+ &bull; If you want to automatically index the web pages of a domain registered in SSEP search engine, access the "<span class="sb">ssep_cron.php</span>" file with Cron Jobs (from hosting CPanel), passing the "<span class="sbi">cron=ADMIN_NAME</span>" for $_GET variable (ADMIN_NAME is the name added to the <span class="sbi">$admin_name</span> variable set in "config.php"). See also the comments in the "ssep_cron.php" file.<br><br>
+
+<h4>Info for the oher configurations in "config.php"</h4>
+<ul>
+ <li><span class="sb">$lang</span> - Sufix for the "<span class="sb">lang_...txt</span>" file with texts and messages used in script (in JSON format), in "<span class="sbi">ssep/templ/</span>" folder.<br>
+ - For example, if you want to use the script in Espanol (Spanish), translate the "<span class="sb">lang_en.txt</span>" file into a similar text file, named "<span class="sbi">lang_es.txt</span>" (with valid JSON format), and set:<br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span class="sb cb">$lang = 'es';</span><br>
+ - <span class="si">If this file is not properly edited with JSON format, the script will use the "lang_en.txt" file.</span></li>
+ <li><span class="sb">$search_domain</span> - The registered domain in which to search (in Search-Page). If the value is "<span class="sbi">auto</span>" the script will search in the indexed pages of the local domain (where the script is installed,) or, if you open the Search-Page from Admin Panel, in the current selected domain in Admin page. Otherwise, the script will search in the indexed pages of the specified domain, MUST BE REGISTERED AND INDEXED IN DATABASE (default "auto").</li>
+ <li><span class="sb">$cache_dir</span> - The name of the directory for search cache files. In this directory the script creates a folder for each registered domain. In that folder the SSEP script saves cache files with the search results, and counter for searched phrases. Next time when the same search phrase is seek, the script gets the results from the cache file, and increments the counter of that search.</li>
+ <li><span class="sb">SSEP_PREFIX</span> - Prefix of the tables in database used by this search engine script (default "ssep_").</li>
+ <li><span class="sb">SSEP_TEMPL</span> - Folder with html /css template, and language files.</li>
+</ul>
+<h4>Adding Search Suggestions</h4>
+The Search Page has included Search-Suggestions feature (The suggestions are Titles of indexed pages which contain the typed words in search form). By default, the SSEP script displays 10 rows with suggestions. This number can be changed in the "<span class="sbi">Advanced Settings</span>" section, in Admin Panel. To disable this feature, just set to 0 the value of "<span class="sb">Search Suggestions</span>" field in Admin Panel.<br>
+ &bull; If you want to have a form with Search-Suggestions in the other pages of your website, add this code in the site pages (a HTML form, and JavaScript with Ajax for suggestions):<br>
+ <sub class="sbi su">Click on the code to select it.</sub>
+<pre class="code">
+&lt;form action="/ssep/index.php" method="post" id="search"&gt;
+  &lt;input type="search" name="sr" autocomplete="off" maxlength="45" id="ssep_inp" pattern="[A-z0-9\u00C0-\u00FF_ \-]{3,45}" required="required"
+  title="Between 3 and 45 characters: Letters, Numbers, Lines, and Space." placeholder="Search" /&gt;
+  &lt;input type="submit" value="Search" /&gt;
+&lt;/form&gt;
+&lt;script&gt;
+// SSEP - Search Suggestions - from: https://coursesweb.net/ 
+// Ajax - Seceives data to send, and a callback function (called when the response is received)
+function ajaxSend(datasend, callback) {
+  var request =  (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject("Microsoft.XMLHTTP");
+  datasend += '&amp;isajax=1';    // to know in php it is ajax request
+
+  request.open('POST', '/ssep/index.php');			// define the request
+
+  // adds  a header to tell the PHP script to recognize the data as is sent via POST, and send data
+  request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+  request.send(datasend);
+
+  // Check request status,  when the response is completely received, pass it to callback function
+  request.onreadystatechange = function() {
+    if (request.readyState == 4) {
+      callback(request.responseText);
+    }
+  }
+}
+
+// keyup event on #search
+if(document.getElementById('search')) {
+  var src_frm = document.getElementById('search');    // form for search
+  if(!document.getElementById('src_sugest')) {
+    src_frm.insertAdjacentHTML('beforeend', '&lt;div id="src_sugest"&gt;&lt;/div&gt;');
+    var src_sugest = document.getElementById('src_sugest');    // element for search-suggest
+  }
+  var cache_sugest = {};    // keep 1st 11 returned sugested
+  var sugest_src = [];    // store the 'src' keys of sugested in $cache_sugest
+
+  // get string value, if 3+ characters, removes non alpha-numeric-line-space characters
+  // call ajax with the string. Add response in Div #src_sugest
+  function srcSugest(src) {
+    src = src.replace(/([^A-z0-9\u00C0-\u00FF ])/ig, ' ').replace(/( [A-z0-9\u00C0-\u00FF]{1,2} )|(^[A-z0-9\u00C0-\u00FF]{1,2} )|( [A-z0-9\u00C0-\u00FF]{1,2}$)/ig, ' ').replace(/\s\s+/ig, ' ').replace(/^\s+|\s+$/g, '').toLowerCase();
+
+    if(src.length &gt; 2) {
+      // if sugested in cache, add it, else, get via ajax
+      if(cache_sugest[src]) src_sugest.innerHTML = cache_sugest[src] +'&lt;div onclick="this.parentNode.innerHTML = \'\';"&gt;X&lt;/div&gt;';
+      else {
+        ajaxSend('sugest='+ src, function(resp){
+          if(resp.length &gt; 8) {
+            if(src_sugest) src_sugest.innerHTML = resp +'&lt;div onclick="this.parentNode.innerHTML = \'\';"&gt;X&lt;/div&gt;';
+
+            // store sugested in $cache_sugest, keeping 15 caches (delete $src from $sugest_src, and $cache_sugest)
+            if(sugest_src.length &gt; 15) delete cache_sugest[sugest_src.shift()];
+            cache_sugest[src] = resp;
+            sugest_src.push(src);
+          }
+        });
+      }
+    }
+    else if(src_sugest) src_sugest.innerHTML = '';
+  }
+
+  src_frm['sr'].removeEventListener('keyup', function(e){srcSugest(e.target.value);}, false);
+  src_frm['sr'].addEventListener('keyup', function(e){srcSugest(e.target.value);}, false);
+
+  // called onclick a sugested title. Get and set search phrase
+  function getSugest(src_t) {
+    src_sugest.innerHTML = '';
+    src_frm['sr'].value = src_t.innerHTML.replace(/\&lt;[^\&gt;]*\&gt;/ig, '');    // delete tags
+    src_frm.submit();
+  }
+}
+&lt;/script&gt;
+</pre>
+ - The address from "action" in &lt;form&gt; must open the "ssep/index.php" file.<br/><br/>
+ &bull; And add this CSS code into an external .css file or &lt;style&gt; tag included in the web page (it styles the suggestions).<br>
+ <sub class="sbi su">Click on the code to select it.</sub>
+<pre class="code">
+#search {
+ position:relative;
+ padding:0;
+}
+#search #ssep_inp:focus {
+ background:#eeeefe;
+}
+#src_sugest {
+ position:absolute;
+ left:-.5em;
+ margin:1px 0 0 2px;
+ max-width:15em;
+ max-height:30em;
+ background:#eee;
+ text-align:left;
+ padding:0;
+ font-size:.9em;
+ font-family:"Calibri",sans-serif;
+ z-index:9990;
+ overflow-Y:auto;
+ overflow-X:hidden;
+ -moz-border-radius:.5em;
+ -webkit-border-radius:.5em;
+ -khtml-border-radius:.5em;
+ border-radius:.5em;
+}
+#src_sugest h4 {
+ margin:3px 2px;
+ border-bottom:1px dashed #0001bb;
+ padding:1px;
+ font-weight:600;
+ cursor:pointer;
+}
+#src_sugest h4:hover {
+ background:#fefefe;
+}
+#src_sugest .hglw {
+ background:#fbfbbb;
+ font-weight:700;
+ font-style:oblique;
+}
+#src_sugest div {
+ position:absolute;
+ top:0;  right:0;
+ border:1px solid #fe0000;
+ background:#fbfbfb;
+ padding:1px 3px;
+ font-size:1em;
+ font-weight:700;
+ color:#fb0001;
+ cursor:pointer;
+ -moz-border-radius:.4em;
+ -webkit-border-radius:.4em;
+ -khtml-border-radius:.4em;
+ border-radius:.4em;
+}
+#src_sugest div:hover {
+ background:#fbfb00;
+}
+</pre>
+- <span class="si">See example in the "example-search-form-sugest.htm" file.</span>
+<h3>Other Specifications</h3>
+&bull; The SSEP script uses by default PDO for connecting to MySQL database. If your server not support PDO, the script will use MySQLi.<br><br>
+&bull;  The tables in MySQL database are created automatically with the <span class="sb">createMainTables()</span> and <span class="sb">createIndexTables()</span> methods, in the "<span class="sbi">php/crawlindex.php</span>" file.<br>
+- If the script not creates automatically the tables, you can create the main tables by accessing this address on your browser (after logg in as Admin):
+<blockquote class="sb">http://your_domain/ssep/admin.php?mod=create_tables</blockquote><br>
+&bull; These type of files (extensions) are excluded from crawling:
+ <p class="sb cb">3g2|3gp|7z|a52|aac|ace|amv|ar|arc|arj|as|asc|asf|avi|bin|bmp|bz2|bzip|bzip2|css|csv|divx|dll|drc|dv|f4v|
+ exe|fla|flv|gif|gvi|gxf|gz|gzip|ice|ico|inf|ini|iso|jar|jpg|jpe|jpeg|js|jsfl|json|log|kar|m1v|m2v|m4a|m4v|
+ midi|mkv|mp1|mp2|mp3|mp4|mtv|mxf|odb|odf|odp|ogg|ogm|ogv|ogx|ott|pcd|pdf|pic|pgm|png|pps|ppt|
+ psd|ram|rar|rle|rm|sgv|sql|swf|tar|tga|tif|tiff|ttf|vlc|wmf|wmv|wvx|xlt|xar|xfl|zip|zipx</p>
+- If you want to modify this list, edit the <span class="sb">$exclude_files</span> property, in the "<span class="sbi">php/crawlindex.php</span>" file (line 22). Use the "|" as separator.<br><br>
+&bull; The "<span class="sb">stop_words.txt</span>" file (in the "<span class="sbi">ssep/php/</span>" folder) contains stop word which will be excluded from searches. You can add other stop words too, <span class="sb">separated by comma</span>.<br><br>
+&bull; You can Add to Crawl and Index multiple domains, BUT the Search Page can be used to search in a single domain.<br>
+- The SSEP script crawls and indexes only the local links, that points to pages of the current selected domain in Admin Panel.<br><br>
+&bull; By default, the script removes &lt;a&gt;, &lt;form&gt;, and &lt;select&gt; HTML elements (with all their content) from indexed contend stored in database, for faster and better search reults (However the local links in crawled page are followed). You can delete them from excluded list (by clicking on the <span class="sb cr">[X]</span> button), or also add other HTML elements to be removed, with specified attributes, in the "Advanced Settings" section, in Admin Panel<br>
+For example, if you want to exclude all the &lt;ul&gt; items with class "menu": Add <span class="sb cb">UL</span> to the <span class="sbi">Tag Name</span> column, <span class="sb cb">class</span> to the <span class="sbi">Attribute</span> column, and <span class="sb cb">menu</span> to the <span class="sbi">Value</span> column.<br>
+- You can specify multiples values for the same attribute, separated by comma.<br>
+For example, to remove the &lt;div&gt; items which have id="some_name", id="side", and id="footer": Add <span class="sb cb">DIV</span> to the "Tag Name" column, <span class="sb cb">id</span> to "Attribute", and: <span class="sb cb">some_name, side, footer</span> to "Value".<br>
+To remove all the &lt;pre&gt; elements, just add <span class="sb cb">PRE</span> to "Tag Name", and let empty the "Attribute" and "Value" fields.<br><br>
+&bull; Each registered domain can be cofigured with its own configuration settings.<br><br>
+&bull; By default, the search results in the search page are loaded via Ajax, with <span class="sb">Infinite Pagination</span> technology. When the scrollbar reaches near the bottom of the page, the next page is loaded, and again, till the last pagination page with results of that search.<br>
+You can replace <span class="sbi">Infinite Pagination</span> with <span class="sb">Classic pagination</span>, in the "Advanced Settings" section. The pagination links will be displayed to the bottom, after the searh results.<br>
+- If you want to Not use Ajax, check the <span class="sb">Disable</span> button in "Advanced Settings".<br>
+- After you make changes in "Advanced Settings" delete the cache files (from the button: Delete Cache files).<br><br>
+&bull; <span class="si">For other details, see the description from info-mark <img src="templ/info_mark.png" alt="Info Mark" width="18" height="18" /> associated to each option</span>.<br><br>
+&bull; To make changes in the HTML of the Search Page, edit the "<span class="sb">search.htm</span>" file, in the "<span class="sbi">ssep/templ/</span>" folder.<br>
+&bull; To change the style of the Search Page, edit the "<span class="sb">search_style.css</span>" and "<span class="sb">search_style_mobile.css</span>" files, in the "<span class="sbi">ssep/templ/</span>" folder ("search_style_mobile.css" is for browsers with the width less than 400 pixels, for mobile devices).<br><hr><br>
+
+
+ &bull; To see online Demo of this SSEP aplication, visit: <a href="https://coursesweb.net/scripts/ssep/admin.php" title="Demo SSEP - Site Search Engine PHP-Ajax">coursesweb.net/scripts/ssep/admin.php</a><br><br>
+ &bull; Home Page: <a href="https://coursesweb.net/php-mysql/ssep-site-search-engine-php-ajax_s2" title="SSEP - Site Search Engine PHP-Ajax">coursesweb.net/php-mysql/ssep-site-search-engine-php-ajax_s2</a><br><br><br>
+ - <span class="sbi">This script is Free, and Open Source. You can use, modify and publish it freely.<br>
+ <em id="mp">- Have a Happy Life with Everyone -</em>
+<script>
+function selectElmCnt(elm) {
+  if(document.body.createTextRange) {
+    var range = document.body.createTextRange();
+    range.moveToElementText(elm);
+    range.select();
+  }
+  else if(window.getSelection) {
+    var selection = window.getSelection();
+    var range = document.createRange();
+    range.selectNodeContents(elm);
+    selection.removeAllRanges();
+    selection.addRange(range);
+  }
+}
+var pre_code = document.querySelectorAll('pre.code');
+var nr_pc = pre_code.length;
+for(var i=0; i<nr_pc; i++) pre_code[i].onclick = function(){ selectElmCnt(this); }
+</script>
+</body>
+</html>
