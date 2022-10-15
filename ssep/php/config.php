@@ -11,7 +11,7 @@ $mysql['user'] = 'root';
 $mysql['pass'] = 'passdb';
 $mysql['bdname'] = 'dbname';
 
-$lang = 'en';      // sufix of the 'lang_...txt' file with texts, in 'templ/' folder ('en' for english, 'ro' - rumano)
+$lang = 'en';      // sufix of the 'lang_...txt' file with texts, in 'templ/' folder ('en' for english, 'ro' - rumano, 'fr' - french)
 $search_domain = 'auto';    // in which registered domain to search ('auto' = current domain where the script is installed)
 
         /* FROM HERE NO NEED TO MODIFY */
