@@ -1,0 +1,91 @@
+</section>
+
+<footer id="footer">
+ <em id="mp">- WebMaster, WebDesigner : MarPlo -</em>
+ From: <a href="http://coursesweb.net/" title="CoursesWeb">http://coursesweb.net/</a>
+</footer>
+<script>
+// SSEP - Site Search Engine PHP-Ajax - http://coursesweb.net/
+// hides $hide, shows $show, arrays with id
+function hideShow(hide, show) {
+  var nr_hide = hide.length;
+  var nr_show = show.length;
+
+  for(var i=0; i< nr_hide; i++) {
+    if(document.getElementById(hide[i])) document.getElementById(hide[i]).style.display = 'none';
+  }
+  for(var i=0; i< nr_show; i++) {
+    if(document.getElementById(show[i])) document.getElementById(show[i]).style.display = 'block';
+  }
+}
+
+// to add form items to specify html elements which to remove from content
+var remove_elm = document.getElementById('remove_elm');
+var add_fields = document.getElementById('add_fields');
+
+// Function that adds new input items for $deltags removing elms
+function addInpItm() {
+  // create a TR with the new input fields
+  remove_elm.appendChild(document.createElement('tr')).innerHTML = deltags;
+  removeItm();    // register onclick to [X]
+}
+
+if(add_fields) {
+  // change to select domain, submit form
+  document.getElementById('sel_domain').addEventListener('change', function(){
+    this.form.submit();
+  }, false);
+  
+
+  // onclick to add new deltags fields
+  var deltags = '<td class="del_itms">[X]</td><td><input name="tag_name[]" size="6" value="" type="text"></td><td><input name="tag_attr[]" size="5" value="" type="text"></td><td><input name="attr_val[]" size="28" value="" type="text"></td>';   // TR with input items
+  add_fields.addEventListener('click', addInpItm, false);
+
+  // when click to restore default settings. Receives the form
+  document.getElementById('re_sets').addEventListener('click', function(){
+    this.form.act.value = 're_sets';
+    this.form.submit();
+  }, false);
+
+  // when submit delete domain pages
+  document.getElementById('btn_del_pgs').addEventListener('click', function() {
+    if(window.confirm(tl.msg_confirm_del_pgs)) this.form.submit();
+    else return false;
+  }, false);
+
+  // when submit delete the domain
+  document.getElementById('btn_del_dom').addEventListener('click', function() {
+    if(window.confirm(tl.msg_confirm_del_dom)) this.form.submit();
+    else return false;
+  }, false);
+
+  // when submit delete cache files
+  document.getElementById('btn_del_cache').addEventListener('click', function() {
+    if(window.confirm(tl.msg_confirm_del_cache)) this.form.submit();
+    else return false;
+  }, false);
+
+  // click for tabs
+  var ultabs = document.getElementById('ultabs').querySelectorAll('li');
+  var nr_ultabs = ultabs.length;
+  for(var i=0; i<nr_ultabs; i++) ultabs[i].addEventListener('click', function(){
+    document.getElementById('ultabs').querySelector('.tabvi').removeAttribute('class');
+    this.setAttribute('class', 'tabvi');
+    hideShow(['dashboard', 'crawl_index', 'index_only', 'ssep_sets'], [this.id.replace(/^tab_/i, '')]);
+  }, false);
+}
+
+// register onclick for delete [X], and onchange to fields with file for upload (to check extension)
+function removeItm() {
+  // gets all .cls_res, and .del_itms, register onclick
+  var del_itms = document.querySelectorAll('.cls_res, .del_itms');
+  var nr_di = del_itms.length;
+
+  for(var i=0; i<nr_di; i++) {
+    del_itms[i].addEventListener('click', function(){ this.parentNode.outerHTML = '';}, false);
+  }
+}
+removeItm();    // register onclick to [X]
+</script>
+</body>
+</html>

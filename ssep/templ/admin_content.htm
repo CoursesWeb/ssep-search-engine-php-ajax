@@ -1,0 +1,135 @@
+<h2>{$domain}: &nbsp; {$current_dom}</h2>
+<a href="index.php" title="{$search_page}" id="search_page" target="_blank">{$search_page}</a>
+<ul id="ultabs">
+ <li id="tab_dashboard" class="tabvi">{$dashboard}</li>
+ <li id="tab_crawl_index">{$crawl_index}</li>
+ <li id="tab_index_only">{$index_only}</li>
+ <li id="tab_ssep_sets">{$ssep_sets}</li>
+</ul>
+<div id="dashboard">
+ <form action="admin.php" method="post" id="frm_sel_domain">
+  {$sel_domain}: <select name="sel_domain" id="sel_domain">{$op_domain}</select>
+ </form>
+ <form action="admin.php" method="post" id="frm_add_domain">
+ <div class="cb"><span class="msg_tooltip"><span>{$msg_add_domain}</span></span> {$add_domain}</div>
+  <select name="protocol"><option value="http" selected>http</option><option value="https">https</option></select>://<input type="text" id="add_domain" name="add_domain" />
+  <input type="submit" value="{$add}" />
+ </form><br class="clr">
+  <form action="admin.php" method="post">
+   <input type="hidden" name="reindex" value="all" />
+   <input type="hidden" name="act" value="index" />
+   <span class="msg_tooltip"><span>{$msg_reindex_dom}</span></span>
+   <input type="submit" value="{$reindex_dom}" />
+   <label><input type="checkbox" name="add_subdomain" value="1" /> {$add_subdomain}</label> <span class="msg_tooltip"><span>{$msg_add_subdomain}</span></span>
+  </form>
+ <div id="ssep_info">
+  <span class="cb">{$registered_urls}</span>: {$nr_pgs}
+  <ul id="nr_pgs">
+   <li>{$unable_to_read} - {$nr_1}</li>
+   <li>{$pending_to_index} - {$nr0}</li>
+   <li>{$without_indexed_content} - {$nr1}</li>
+   <li>{$succesfully_indexed} - {$nr2}</li>
+   <li>{$cache_files} - {$nr_chace_f}</li>
+  </ul>
+ </div>
+ <div id="btns_dashboard">
+  <form action="admin.php" method="post">
+   <input type="hidden" name="act" value="index_pending" />
+   <input type="submit" value="{$index_pending}" />
+   <span class="msg_tooltip"><span>{$msg_index_pending}</span></span>
+  </form>
+  <form action="admin.php" method="post">
+   <input type="hidden" name="act" value="clean_cnt" />
+   <input type="submit" value="{$clean_cnt}" />
+   <span class="msg_tooltip"><span>{$msg_clean_cnt}</span></span>
+  </form>
+  <form action="admin.php" method="post">
+   <input type="hidden" name="act" value="get_sitemap" />
+   <input type="submit" value="{$get_sitemap}" />
+   <span class="msg_tooltip"><span>{$msg_get_sitemap}</span></span>
+  </form>
+  <form action="admin.php" method="post">
+   <input type="hidden" name="act" value="del_pgs" />
+   <input type="button" id="btn_del_pgs" value="{$delete_pgs}" />
+   <span class="msg_tooltip"><span>{$msg_del_pgs}</span></span>
+  </form>
+  <form action="admin.php" method="post">
+   <input type="hidden" name="act" value="del_cache" />
+   <input type="button" id="btn_del_cache" value="{$delete_cache}" />
+   <span class="msg_tooltip"><span>{$msg_del_cache}</span></span>
+  </form>
+  <form action="admin.php" method="post">
+   <input type="hidden" name="act" value="del_dom" />
+   <input type="button" id="btn_del_dom" value="{$del_domain}" />
+   <span class="msg_tooltip"><span>{$msg_del_dom}</span></span>
+  </form>
+ </div>
+</div>
+<div id="crawl_index">
+ <form action="admin.php" method="post">
+  <input type="hidden" name="act" value="index" />
+  <input type="hidden" name="type" value="crawl_index" />
+  <span class="cb">{$address}</span>: <span class="msg_tooltip"><span>{$msg_start_url}</span></span> <input type="text" name="start_url" size="48" value="" />
+   <label><input type="checkbox" name="add_subdomain" value="1" /> {$add_subdomain}</label> <span class="msg_tooltip"><span>{$msg_add_subdomain}</span></span><br><br>
+  <label><input type="checkbox" name="reindex" value="1" /> {$reindex}</label> <span class="msg_tooltip"><span>{$msg_reindex}</span></span><br><br>
+  <span class="cb">{$set_depth}</span>: <span class="msg_tooltip"><span>{$msg_set_depth}</span></span> &nbsp; <label><input type="radio" name="max_depth" value="full" checked />{$full}</label> &hArr;
+  <label><input type="radio" name="max_depth" value="to_depth" />{$to_depth}</label>: <input type="number" min="0" max="99" class="num2_input" name="to_depth" value="1" /><br><br>
+  <span class="cb">{$max_urls}</span>: <span class="msg_tooltip"><span>{$msg_max_urls}</span></span> &nbsp; <label><input type="radio" name="max_urls" value="full" checked />{$full}</label> &hArr;
+  <label><input type="radio" name="max_urls" value="to_max" />{$to_max}</label>: <input type="number" min="0" name="to_max" value="200" /><br><br>
+  <span class="cb">{$url_include}</span>: <span class="msg_tooltip"><span>{$msg_url_include}</span></span><br>
+  <textarea name="url_include" cols="35" rows="3"></textarea><br><br>
+  <span class="cb">{$url_exclude}</span>: <span class="msg_tooltip"><span>{$msg_url_exclude}</span></span><br>
+  <textarea name="url_exclude" cols="35" rows="3"></textarea>
+  <input type="submit" class="btn_sbm" value="{$start_index}" />
+ </form>
+</div>
+<div id="index_only">
+ <form action="admin.php" method="post">
+  <input type="hidden" name="act" value="index_only" />
+  <span class="cb">{$from_sitemap}</span>: <span class="msg_tooltip"><span>{$msg_from_sitemap}</span></span> <input type="text" name="from_sitemap" size="48" value="" /><br><br>
+   <label><input type="checkbox" name="add_subdomain" value="1" /> {$add_subdomain}</label> <span class="msg_tooltip"><span>{$msg_add_subdomain}</span></span><br><br>
+  <span class="cb">{$only_urls}</span>: <span class="msg_tooltip"><span>{$msg_only_urls}</span></span><br>
+  <textarea name="only_urls" cols="45" rows="8"></textarea><br><br>
+  <input type="submit" value="{$start_index}" />
+ </form>
+</div>
+<div id="ssep_sets">
+ <form action="admin.php" method="post">
+  <input type="hidden" name="act" value="ssep_sets" />
+  <h4>{$remove_elm} <span class="msg_tooltip"><span>{$msg_remove_elm}</span></span></h4>
+  <table id="remove_elm">
+   <tr><th>{$delete}</th><th>{$tag_name}</th><th>{$attribute}</th><th>{$value}<br><sup>- {$multi_val} -</sup></th></tr>
+   {$deltags}
+ </table>
+  <div class="center_25"><input type="button" value="{$add_fields}" id="add_fields" /></div><hr class="hr_35">
+  <h4>{$scores} <span class="msg_tooltip"><span>{$msg_scores}</span></span></h4>
+  <table class="scores">
+   <tr><th>{$tag}</th><th>Nr.</th><th>{$value}</th></tr>
+   {$score2}
+  </table>
+  <table class="scores">
+   <tr><th>{$element}</th><th>{$value}</th></tr>
+  {$score1}
+  </table>
+  <div class="center_25 cb">
+   <label>{$ssep_rowsperpage}: <span class="msg_tooltip"><span>{$msg_ssep_rowsperpage}</span></span> &nbsp; <input type="number" min="0" max="100" class="num2_input" name="rowsperpage" value="{$rowsperpage}" /></label><br>
+   <label>{$ssep_suggest}: <span class="msg_tooltip"><span>{$msg_ssep_suggest}</span></span> &nbsp; <input type="number" min="0" max="100" class="num2_input" name="src_suggest" value="{$src_suggest}" /></label><br>
+   <label>{$last_searches}: <span class="msg_tooltip"><span>{$msg_last_searches}</span></span> &nbsp; <input type="number" min="0" max="100" class="num2_input" name="last_src" value="{$last_src}" /></label><br>
+   <label>{$top_searches}: <span class="msg_tooltip"><span>{$msg_top_searches}</span></span> &nbsp; <input type="number" min="0" max="100" class="num2_input" name="top_src" value="{$top_src}" /></label><br>
+  <span class="cb">{$pgi_type}</span>: <span class="msg_tooltip"><span>{$msg_pgi_type}</span></span> &nbsp; <label><input type="radio" name="pgi_type" value="infinite" {$check_infinite} />{$infinite}</label> &hArr;
+  <label><input type="radio" name="pgi_type" value="standard" {$check_standard} />{$standard}</label><br>
+  <span class="cb">{$use_ajax}</span>: <span class="msg_tooltip"><span>{$msg_use_ajax}</span></span> &nbsp; <label><input type="radio" name="use_ajax" value="1" {$check_ajax1} />{$enable}</label> &hArr;
+  <label><input type="radio" name="use_ajax" value="0" {$check_ajax0} />{$disable}</label>
+   </div><hr class="hr_35"><br>
+  <input type="submit" value="{$save_set}" /> &nbsp; &nbsp; &nbsp; <input type="button" id="re_sets" value="{$re_sets}" />
+ </form>
+</div>
+<script>
+// object with mesages from 'lang_' json file
+var tl = {
+ msg_confirm_del_cache: '{$msg_confirm_del_cache}',
+ msg_confirm_del_pgs: '{$msg_confirm_del_pgs}',
+ msg_confirm_del_dom: '{$msg_confirm_del_dom}'
+};
+document.getElementById('p_content').insertAdjacentHTML('beforebegin', '<a href="admin.php?mod=log_out" title="{$logout}" id="log_out">{$logout}</a>');
+</script>
